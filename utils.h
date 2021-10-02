@@ -1,9 +1,15 @@
 #ifndef CA_HOMEWORK_UTILS_H
 #define CA_HOMEWORK_UTILS_H
 
-#include <string>
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <cstddef>
 
-char *copyFromString(std::string &str);
+char *readString(FILE *file);
+
+int readInt(FILE *file);
 
 void initRand();
 

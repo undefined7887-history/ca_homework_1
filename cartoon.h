@@ -1,8 +1,10 @@
 #ifndef CA_HOMEWORK_CARTOON_H
 #define CA_HOMEWORK_CARTOON_H
-#include <fstream>
+
+#include <cstdio>
 #include <string>
 
+// Cartoon is a concrete movie type
 struct cartoon {
     char *name;
     int year;
@@ -14,11 +16,11 @@ struct cartoon {
     type t;
 };
 
-void In(cartoon &c, std::ifstream &stream);
+void In(cartoon &c, FILE *file);
 
 void InRandom(cartoon &c);
 
-void Out(cartoon &c, std::ofstream &stream);
+void Out(cartoon &c, FILE *file);
 
 double Quotient(cartoon &c);
 

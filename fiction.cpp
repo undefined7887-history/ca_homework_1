@@ -1,15 +1,10 @@
-#include <cstring>
 #include "fiction.h"
 #include "utils.h"
 
-void In(fiction &f, std::ifstream &stream) {
-    std::string name;
-    std::string director;
-
-    stream >> name >> f.year >> director;
-
-    f.name = copyFromString(name);
-    f.director = copyFromString(director);
+void In(fiction &f, FILE *file) {
+    f.name = readString(file);
+    f.year = readInt(file);
+    f.director = readString(file);
 }
 
 void InRandom(fiction &f) {
@@ -18,8 +13,8 @@ void InRandom(fiction &f) {
     f.director = randString(randInt(10, 20));
 }
 
-void Out(fiction &f, std::ofstream &stream) {
-    stream << "Fiction: name = " << f.name << ", year = " << f.year << ", director = " << f.director << "\n";
+void Out(fiction &f, FILE *file) {
+    fprintf(file, "Fiction: name = %s, year = %d, director = %s\n", f.name, f.year, f.director);
 }
 
 double Quotient(fiction &f) {

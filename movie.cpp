@@ -1,29 +1,29 @@
 #include "movie.h"
 #include "utils.h"
 
-movie *In(std::ifstream &stream) {
+movie *In(FILE *file) {
     movie *mov;
 
     int movieType;
-    stream >> movieType;
+    fscanf(file, "%d", &movieType);
 
     switch (movieType) {
         case 1:
             mov = new movie;
             mov->type = movie::FICTION;
-            In(mov->fic, stream);
+            In(mov->fic, file);
             return mov;
 
         case 2:
             mov = new movie;
             mov->type = movie::CARTOON;
-            In(mov->car, stream);
+            In(mov->car, file);
             return mov;
 
         case 3:
             mov = new movie;
             mov->type = movie::DOCUMENTARY;
-            In(mov->doc, stream);
+            In(mov->doc, file);
             return mov;
 
         default:
@@ -60,20 +60,20 @@ movie *InRandom() {
     }
 }
 
-void Out(movie &m, std::ofstream &stream) {
+void Out(movie &m, FILE *file) {
     switch (m.type) {
         case movie::FICTION:
-            Out(m.fic, stream);
+            Out(m.fic, file);
             break;
         case movie::CARTOON:
-            Out(m.car, stream);
+            Out(m.car, file);
             break;
         case movie::DOCUMENTARY:
-            Out(m.doc, stream);
+            Out(m.doc, file);
             break;
 
         default:
-            stream << "Incorrect movie!\n";
+            printf("Incorrect movie!\n");
     }
 }
 

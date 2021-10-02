@@ -11,9 +11,9 @@ void Clear(container &c) {
     c.len = 0;
 }
 
-void In(container &c, std::ifstream &stream) {
-    while (!stream.eof()) {
-        if ((c.content[c.len] = In(stream)) != nullptr) {
+void In(container &c, FILE *file) {
+    while (!feof(file)) {
+        if ((c.content[c.len] = In(file)) != nullptr) {
             c.len++;
         }
     }
@@ -27,12 +27,12 @@ void InRandom(container &c, int size) {
     }
 }
 
-void Out(container &c, std::ofstream &stream) {
-    stream << "Container contains " << c.len << " elements.\n";
+void Out(container &c, FILE *file) {
+    fprintf(file, "Container contains %d elements.\n", c.len);
 
     for (int i = 0; i < c.len; i++) {
-        stream << i + 1 << ": ";
-        Out(*c.content[i], stream);
+        fprintf(file, "%d: ", i + 1);
+        Out(*c.content[i], file);
     }
 }
 

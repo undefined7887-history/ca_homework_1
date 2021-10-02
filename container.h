@@ -1,6 +1,8 @@
 #ifndef CA_HOMEWORK_CONTAINER_H
 #define CA_HOMEWORK_CONTAINER_H
 
+#include <cstdio>
+#include <cstddef>
 #include "movie.h"
 
 struct container {
@@ -16,11 +18,11 @@ void Init(container &c);
 
 void Clear(container &c);
 
-void In(container &c, std::ifstream &stream);
+void In(container &c, FILE *file);
 
 void InRandom(container &c, int size);
 
-void Out(container &c, std::ofstream &stream);
+void Out(container &c, FILE *file);
 
 void ShakeSort(container &c);
 

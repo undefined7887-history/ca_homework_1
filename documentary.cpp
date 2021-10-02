@@ -1,12 +1,10 @@
-#include <cstring>
 #include "documentary.h"
 #include "utils.h"
 
-void In(documentary &d, std::ifstream &stream) {
-    std::string name;
-    stream >> name >> d.year >> d.duration;
-
-    d.name = copyFromString(name);
+void In(documentary &d, FILE *file) {
+    d.name = readString(file);
+    d.year = readInt(file);
+    d.duration = readInt(file);
 }
 
 void InRandom(documentary &d) {
@@ -15,8 +13,8 @@ void InRandom(documentary &d) {
     d.duration = randInt(1, 10);
 }
 
-void Out(documentary &d, std::ofstream &stream) {
-    stream << "Documentary: name = " << d.name << ", year = " << d.year << ", duration = " << d.duration << "\n";
+void Out(documentary &d, FILE *file) {
+    fprintf(file, "Documentary: name = %s, year = %d, duration = %d\n", d.name, d.year, d.duration);
 }
 
 double Quotient(documentary &d) {

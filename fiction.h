@@ -1,9 +1,10 @@
 #ifndef CA_HOMEWORK_FICTION_H
 #define CA_HOMEWORK_FICTION_H
 
-#include <fstream>
+#include <cstdio>
 #include <string>
 
+// Fiction is a concrete movie type
 struct fiction {
     char *name;
     int year;
@@ -11,11 +12,11 @@ struct fiction {
     char *director;
 };
 
-void In(fiction &f, std::ifstream &stream);
+void In(fiction &f, FILE *file);
 
 void InRandom(fiction &f);
 
-void Out(fiction &f, std::ofstream &stream);
+void Out(fiction &f, FILE *file);
 
 double Quotient(fiction &f);
 

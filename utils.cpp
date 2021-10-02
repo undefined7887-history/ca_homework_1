@@ -1,4 +1,3 @@
-#include <cstring>
 #include "utils.h"
 
 void initRand() {
@@ -6,7 +5,7 @@ void initRand() {
 }
 
 int randInt(int min, int max) {
-    return std::rand() % (max - min + 1) + min;
+    return rand() % (max - min + 1) + min;
 }
 
 char *randString(int len) {
@@ -18,7 +17,7 @@ char *randString(int len) {
     char *result = new char[len + 1];
 
     for (int i = 0; i < len; ++i) {
-        result[i] = numericalAlphabet[std::rand() % (sizeof(numericalAlphabet) - 1)];
+        result[i] = numericalAlphabet[rand() % (sizeof(numericalAlphabet) - 1)];
     }
 
     // Zero terminated string
@@ -27,12 +26,19 @@ char *randString(int len) {
     return result;
 }
 
-char *copyFromString(std::string &str) {
-    // Zero terminated string
-    char *result = new char[str.length() + 1];
+char *readString(FILE *file) {
+    char local[128] = {0};
+    fscanf(file, "%s", local);
 
-    std::memcpy(result, str.c_str(), str.length() + 1);
+    char *result = (char *) malloc(strlen(local));
+    strcpy(result, local);
 
     return result;
 }
 
+int readInt(FILE *file) {
+    int result;
+    fscanf(file, "%d", &result);
+
+    return result;
+}

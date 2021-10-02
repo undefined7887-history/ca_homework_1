@@ -1,28 +1,26 @@
-#include <iostream>
+#include <cstdio>
 #include <cstring>
 #include "utils.h"
 #include "container.h"
 
 void errMessage1() {
-    std::cout << "incorrect command line!\n"
-                 "  Waited:\n"
-                 "     command -f infile outfile01 outfile02\n"
-                 "  Or:\n"
-                 "     command -n number outfile01 outfile02\n";
+    printf("incorrect command line!\n"
+           "  Waited:\n"
+           "     command -f infile outfile01 outfile02\n"
+           "  Or:\n"
+           "     command -n number outfile01 outfile02\n");
 }
 
 void errMessage2() {
-    std::cout << "incorrect qualifier value!\n"
-                 "  Waited:\n"
-                 "     command -f infile outfile01 outfile02\n"
-                 "  Or:\n"
-                 "     command -n number outfile01 outfile02\n";
+    printf("incorrect qualifier value!\n"
+           "  Waited:\n"
+           "     command -f infile outfile01 outfile02\n"
+           "  Or:\n"
+           "     command -n number outfile01 outfile02\n");
 }
 
 void errMessage3(int size) {
-    std::cout << "incorrect number of items = "
-              << size
-              << ". Set 0 < number <= 10000\n";
+    printf("incorrect number of items = %d. Set 0 < number <= 10000\n", size);
 }
 
 int main(int argc, char *argv[]) {
@@ -31,15 +29,17 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::cout << "Start" << std::endl;
-    container c{};
+    printf("Start\n");
+    container c = {};
     Init(c);
 
     if (!strcmp(argv[1], "-f")) {
-        std::ifstream inStream(argv[2]);
-        In(c, inStream);
+        FILE *file = fopen(argv[2], "rw");
+        In(c, file);
+
+        fclose(file);
     } else if (!strcmp(argv[1], "-n")) {
-        auto size = std::atoi(argv[2]);
+        int size = atoi(argv[2]);
 
         if ((size < 1) || (size > 10000)) {
             errMessage3(size);
@@ -52,16 +52,19 @@ int main(int argc, char *argv[]) {
         return 2;
     }
 
-    std::ofstream outStream1(argv[3]);
-    outStream1 << "Input container:\n";
-    Out(c, outStream1);
+    FILE *outFile1 = fopen(argv[3], "w+");
+    fprintf(outFile1, "Input container:\n");
+    Out(c, outFile1);
 
-    std::ofstream outStream2(argv[4]);
+    FILE *outFile2 = fopen(argv[4], "w+");
     ShakeSort(c);
-    outStream2 << "Sorted container:\n";
-    Out(c, outStream2);
+    fprintf(outFile2, "Sorted container:\n");
+    Out(c, outFile2);
 
     Clear(c);
-    std::cout << "Stop" << std::endl;
+    fclose(outFile1);
+    fclose(outFile2);
+
+    printf("Stop\n");
     return 0;
 }

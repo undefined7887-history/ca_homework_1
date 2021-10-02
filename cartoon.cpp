@@ -1,25 +1,24 @@
-#include <cstring>
 #include "cartoon.h"
 #include "utils.h"
 
-void In(cartoon &c, std::ifstream &stream) {
-    std::string name;
-    stream >> name >> c.year;
+void In(cartoon &c, FILE *file) {
+    c.name = readString(file);
+    c.year = readInt(file);
 
-    c.name = copyFromString(name);
+    char *type = readString(file);
 
-    std::string type;
-    stream >> type;
-
-    if (type == "draw") {
+    if (strcmp(type, "draw") == 0) {
         c.t = cartoon::DRAW;
-    } else if (type == "puppet") {
+    } else if (strcmp(type, "puppet") == 0) {
         c.t = cartoon::PUPPET;
-    } else if (type == "plasticine") {
+    } else if (strcmp(type, "plasticine") == 0) {
         c.t = cartoon::PLASTICINE;
     } else {
         c.t = cartoon::DRAW;
     }
+
+    // readString allocates string
+    free(type);
 }
 
 void InRandom(cartoon &c) {
@@ -30,22 +29,22 @@ void InRandom(cartoon &c) {
     c.t = static_cast<cartoon::type>(type);
 }
 
-void Out(cartoon &c, std::ofstream &stream) {
-    std::string type;
+void Out(cartoon &c, FILE *file) {
+    char *type;
 
     switch (c.t) {
         case cartoon::DRAW:
-            type = "DRAW";
+            type = (char *) "DRAW";
             break;
         case cartoon::PUPPET:
-            type = "PUPPET";
+            type = (char *) "PUPPET";
             break;
         case cartoon::PLASTICINE:
-            type = "PLASTICINE";
+            type = (char *) "PLASTICINE";
             break;
     }
 
-    stream << "Cartoon: name = " << c.name << ", year = " << c.year << ", type = " << type << "\n";
+    fprintf(file, "Cartoon: name = %s, year = %d, type = %s\n", c.name, c.year, type);
 }
 
 double Quotient(cartoon &c) {

@@ -1,9 +1,10 @@
 #ifndef CA_HOMEWORK_DOCUMENTARY_H
 #define CA_HOMEWORK_DOCUMENTARY_H
 
-#include <fstream>
+#include <cstdio>
 #include <string>
 
+// Documentary is a concrete movie type
 struct documentary {
     char *name;
     int year;
@@ -11,11 +12,11 @@ struct documentary {
     int duration;
 };
 
-void In(documentary &d, std::ifstream &stream);
+void In(documentary &d, FILE *file);
 
 void InRandom(documentary &d);
 
-void Out(documentary &d, std::ofstream &stream);
+void Out(documentary &d, FILE *file);
 
 double Quotient(documentary &d);
 
